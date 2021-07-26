@@ -1,0 +1,7 @@
+---
+  - name: deploy gotify ssh notification to ssh-notification group
+    hosts: ssh-notification
+    become: yes
+    become_user: root
+    roles:
+      - ssh-notification

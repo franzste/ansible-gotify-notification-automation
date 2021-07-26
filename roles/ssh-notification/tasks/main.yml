@@ -1,0 +1,18 @@
+- name: Install curl
+  ansible.builtin.package:
+    name: curl
+    state: present
+
+- name: create ssh-notification-script
+  template:
+    src: ssh-notification.j2
+    dest: /usr/local/bin/ssh-notification
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Ensure the ssh-notification-script is in etc/pam.d/sshd configuration
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/sshd
+    regexp: 'session\ optional\ pam_exec.so\ \/usr\/local\/bin\/ssh-notification'
+    line: session optional pam_exec.so /usr/local/bin/ssh-notification
